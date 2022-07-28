@@ -7,7 +7,7 @@ export const postController = {
       
       const {description, userId} = req.body
 
-      const id = await postService.findByPkShow(userId)
+      const id = await postService.findByPkShowAllPosts(userId)
 
       if(!id) {
          return res.json('Usuário não existe!')
@@ -32,7 +32,7 @@ export const postController = {
       const verifyId = await postService.findOnePost(id)
 
       if(!verifyId){
-         return res.json('Post inexistente')
+         return res.json('Post inexistente.')
       } else {
          try {
             await postService.updatePost(id, description)
@@ -46,9 +46,15 @@ export const postController = {
          }
       }
    },
+   //DELETE /delete
    delete: async (req: Request, res: Response) => {
       const { id } = req.body
 
+      const verifyId = await postService.findOnePost(id)
+      
+      if(!verifyId) {
+         return res.json('Post inexistente.')
+      }
       try {
          await postService.deletePost(id)
       
@@ -64,8 +70,8 @@ export const postController = {
       const { id } = req.params
 
       try {
-         const postings = await postService.findByPkShow(id)
-         console.log({postings})
+         const postings = await postService.findByPkShowAllPosts(id)
+   
          if(!postings){
             return res.json('Usuário não existe!')
          }

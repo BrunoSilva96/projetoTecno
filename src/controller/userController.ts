@@ -4,7 +4,7 @@ import { userService } from "../service/userService";
 export const userController = {
    //POST /register
    register: async (req: Request, res: Response) => {
-      const { name, email, password } = req.body
+      const { name, email, password, roleId } = req.body
 
       try {
          const userAlreadyExists = await userService.findByEmail(email)
@@ -17,7 +17,7 @@ export const userController = {
             name,
             email, 
             password,
-            role: 'user'
+            roleId
          })
          
          return res.status(201).json(user)
@@ -49,6 +49,10 @@ export const userController = {
        const {email, name } = req.body
 
       try {
+         const user = await userService.findByEmail(email)
+         if(!user){
+            res.json('Usuário não existe')
+         }
          await userService.delete(email)
       
          return res.status(204).send()
@@ -64,13 +68,33 @@ export const userController = {
       const { name, email } = req.body
    
       try {
+         const user = await userService.findByEmail(email)
+         if(!user){
+            res.json('Usuário não existe')
+         }
          await userService.updateUser(name, email)
-         const newNameUser = await userService.findByEmail(email)
-         return res.json(newNameUser);
+         
+         return res.json(user);
       } catch (err) {
          if (err instanceof Error) {
             return res.status(400).json({ message: err.message })
          }
       }
    },
+   //GET /find
+   findOneUser: async (req: Request, res: Response) => {
+      const { email } = req.body
+
+      try {
+        const user = await userService.findByEmail(email)
+         if(!user){
+            res.json('Usuário não existe')
+         }
+         return res.status(200).json(user)
+      } catch (err) {
+         if (err instanceof Error) {
+            return res.status(400).json({ message: err.message })
+         }
+      }
+   }
 }

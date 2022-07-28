@@ -6,14 +6,14 @@ export interface UserAttributes {
    name: string
    email: string
    password: string
-   role: "user"
+   roleId: number
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 export interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes { }
 
-export const User = sequelize.define<UserInstance, UserAttributes>('Users', {
+export const Users = sequelize.define<UserInstance, UserAttributes>('Users', {
    id: {
       allowNull: false,
       autoIncrement: true,
@@ -36,11 +36,11 @@ export const User = sequelize.define<UserInstance, UserAttributes>('Users', {
       allowNull: false,
       type: DataTypes.STRING
     },
-    role: {
+    roleId: {
       allowNull: false,
       type: DataTypes.STRING,
-      validate: {
-        isIn: [['user']]
-      }
+      references: { model: 'roles', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     }
 })

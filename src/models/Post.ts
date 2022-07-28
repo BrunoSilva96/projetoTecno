@@ -1,5 +1,5 @@
 import { sequelize } from "../database"
-import { DataTypes, Model, Optional } from "sequelize"
+import { DataTypes } from "sequelize"
 
 export const Post = sequelize.define('Posts', {
    id: {

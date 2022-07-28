@@ -7,12 +7,13 @@ export const postService = {
       return post
    },
 
-   findByPkShow: async (id: string) => {
+   findByPkShowAllPosts: async (id: string) => {
       const postWithUsers = await User.findByPk(id, {
          attributes: ['name', 'email'],
          include: {
             association: 'posts',
             attributes: [
+               'id',
                'description'
             ],
             
