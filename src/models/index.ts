@@ -1,12 +1,11 @@
 import { Users } from "./User"
 import { Post } from "./Post"
-import { Roles } from "./Roles";
+import { Role } from "./Role";
 
+Role.hasMany(Users, { as: 'users' });
 
 Users.hasMany(Post, { as: 'posts' });
-Users.belongsTo(Roles, { as: 'roles' });
-
-Roles.hasMany(Users, { as: 'user' });
+Users.belongsTo(Role);
 
 Post.belongsTo(Users);
 
@@ -14,5 +13,5 @@ Post.belongsTo(Users);
 export {
    Users,
    Post,
-   Roles
+   Role
 }

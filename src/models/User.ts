@@ -1,19 +1,9 @@
 import { sequelize } from "../database"
-import { DataTypes, Model, Optional } from "sequelize"
+import { DataTypes, Model } from "sequelize"
+import bcrypt from 'bcrypt'
 
-export interface UserAttributes {
-   id: number
-   name: string
-   email: string
-   password: string
-   roleId: number
-}
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
-
-export interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes { }
-
-export const Users = sequelize.define<UserInstance, UserAttributes>('Users', {
+export const Users = sequelize.define('Users', {
    id: {
       allowNull: false,
       autoIncrement: true,
@@ -38,9 +28,9 @@ export const Users = sequelize.define<UserInstance, UserAttributes>('Users', {
     },
     roleId: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       references: { model: 'roles', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    }
+      onDelete: 'RESTRICT'
+    },  
 })

@@ -1,18 +1,33 @@
 import express from 'express';
+import { activitiesController } from './controller/activitiesController';
+import { authController } from './controller/authController';
 import { postController } from './controller/postController';
+import { roleController } from './controller/roleController';
 import { userController } from './controller/userController';
+import { ensureAuth } from './middleware/auth';
+
+const jwt = require("jsonwebtoken");
 
 const router = express.Router()
 
-router.post('/posts', postController.posting);
-router.put('/update/post', postController.update);
-router.delete('/delete', postController.delete);
+
+router.post('/register/auth', authController.register);
+router.post('/auth/login', authController.login);
+
+router.post('/activities', activitiesController.createActive);
+
+router.get('/find/role', /*ensureAuth,*/ roleController.showUserRole);
+router.post('/create/role', /*/ensureAuth,*/ roleController.createRole);
+router.get('/show', /*/ensureAuth,*/ userController.show);
+//router.use(ensureAuth);
+
+router.post('/posts', /*/ensureAuth,*/ postController.posting);
+router.put('/update/post', /*/ensureAuth,*/ postController.update);
+router.delete('/delete', /*/ensureAuth,*/ postController.delete);
 router.get('/show/posts/:id', postController.show);
 
-router.post('/register', userController.register);
-router.get('/show', userController.show);
-router.delete('/delete', userController.delete);
-router.put('/update', userController.update);
-router.get('/find', userController.findOneUser);
+router.delete('/delete', /*/ensureAuth,*/ userController.delete);
+router.put('/update', /*/ensureAuth,*/ userController.update);
+router.get('/find', /*/ensureAuth,*/ userController.findOneUser);
 
 export { router };

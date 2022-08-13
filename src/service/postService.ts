@@ -1,4 +1,4 @@
-import { Post, User } from "../models";
+import { Post, Users } from "../models";
 
 export const postService = {
    posting: async (description: string, userId: number) => {
@@ -8,18 +8,17 @@ export const postService = {
    },
 
    findByPkShowAllPosts: async (id: string) => {
-      const postWithUsers = await User.findByPk(id, {
-         attributes: ['name', 'email'],
+      const postWithUsers = await Users.findByPk(id, {
+         attributes: ['name', 'email'], 
          include: {
             association: 'posts',
             attributes: [
                'id',
                'description'
             ],
-            
          }
       })
-
+      
       return postWithUsers
    },
 

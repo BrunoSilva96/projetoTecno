@@ -1,7 +1,7 @@
 import { sequelize } from "../database"
 import { DataTypes } from "sequelize"
 
-export const Roles = sequelize.define('Rosts', {
+export const Role = sequelize.define('Roles', {
    id: {
       allowNull: false,
       autoIncrement: true,
@@ -10,6 +10,6 @@ export const Roles = sequelize.define('Rosts', {
     },
     roleName: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     }
 })

@@ -15,7 +15,7 @@ export const postController = {
 
          try {
             const post = await postService.posting(description, userId)
-   
+    
             return res.status(201).json(post)
    
          } catch (err) {

@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         references: { model: 'roles', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'RESTRICT'
       },
       created_at: {
         allowNull: false,
