@@ -11,9 +11,9 @@ const PORT = process.env.PORT || 3000;
 app.use(router);
 
 app.listen(PORT, () => {
-   sequelize.authenticate().then(() => {
-      console.log('DB connection successful!!!')
-   });
+  sequelize.authenticate().then(() => {
+    console.log("DB connection successful!!!");
+  });
 
-   console.log(`Server started successfuly at PORT ${PORT}`);
-})
+  console.log(`Server started successfuly at PORT ${PORT}`);
+});

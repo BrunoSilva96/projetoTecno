@@ -1,43 +1,40 @@
 import { Post, Users } from "../models";
 
 export const postService = {
-   posting: async (description: string, userId: number) => {
-      const post = await Post.create({description, userId})
+  posting: async (description: string, userId: number) => {
+    const post = await Post.create({ description, userId });
 
-      return post
-   },
+    return post;
+  },
 
-   findByPkShowAllPosts: async (id: string) => {
-      const postWithUsers = await Users.findByPk(id, {
-         attributes: ['name', 'email'], 
-         include: {
-            association: 'posts',
-            attributes: [
-               'id',
-               'description'
-            ],
-         }
-      })
-      
-      return postWithUsers
-   },
+  findByPkShowAllPosts: async (id: string) => {
+    const postWithUsers = await Users.findByPk(id, {
+      attributes: ["name", "email"],
+      include: {
+        association: "posts",
+        attributes: ["id", "description"],
+      },
+    });
 
-   findOnePost: async (id: string) => {
-      const idPost = await Post.findByPk(id, {
-         attributes: ['userId', 'description']
-      })
+    return postWithUsers;
+  },
 
-      return idPost;
-   },
+  findOnePost: async (id: string) => {
+    const idPost = await Post.findByPk(id, {
+      attributes: ["userId", "description"],
+    });
 
-   updatePost: async (id: string, description: string) => {
-      const updatePost = await Post.update({description}, {where: {id}})
+    return idPost;
+  },
 
-      return updatePost;
-   },
+  updatePost: async (id: string, description: string) => {
+    const updatePost = await Post.update({ description }, { where: { id } });
 
-   deletePost: async (id: string) => {
-      const deletePost = await Post.destroy({where: {id}})
-      return 1;
-   }
-}
+    return updatePost;
+  },
+
+  deletePost: async (id: string) => {
+    const deletePost = await Post.destroy({ where: { id } });
+    return 1;
+  },
+};
